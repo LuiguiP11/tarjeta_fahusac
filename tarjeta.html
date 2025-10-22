@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades por tu Logro!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=trophy" />
+    <style>
+        :root {
+            --primary-color: #003366; /* Azul oscuro institucional */
+            --secondary-color: #FFD700; /* Dorado para acentos */
+            --text-color: #333;
+            --bg-color: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column; /* Added to stack logos and card vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed height to min-height */
+            margin: 0;
+            overflow-x: hidden; /* Changed to hidden to prevent horizontal scroll */
+            padding: 20px; /* Added padding for overall spacing */
+            box-sizing: border-box; /* Ensure padding doesn't add to total width/height */
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px; /* Space between logos */
+            margin-bottom: 30px; /* Space between logos and card */
+            padding-top: 20px; /* Space from top of the page */
+        }
+
+        .logos-container img {
+            max-height: 80px; /* Adjust logo size */
+            width: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            border: 4px outset #555; /* Borde oscuro con efecto 3D, grosor reducido */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Sombra ajustada para complementar el 3D */
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            animation: fadeInCard 1s ease-out;
+        }
+
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .welcome-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: var(--primary-color);
+            margin: 0;
+            animation: slideInTitle 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        @keyframes slideInTitle {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .student-name {
+            font-size: 2em;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .message {
+            font-size: 1.1em;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .button {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button.download {
+            background-color: #28a745;
+        }
+        
+        .button.download:hover {
+            background-color: #218838;
+            color: white;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Cambiado a -1 para que se muestre detrás */
+            pointer-events: none;
+        }
+        
+        .footer-signature {
+            margin-top: 30px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .trophy-icon {
+            font-size: 80px; /* Tamaño del ícono */
+            color: var(--secondary-color); /* Color dorado */
+            font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+            /* Combinación de sombras para crear un borde y efecto 3D */
+            text-shadow:
+                /* Borde azul */
+                -2px -2px 0 var(--primary-color),
+                 2px -2px 0 var(--primary-color),
+                -2px  2px 0 var(--primary-color),
+                 2px  2px 0 var(--primary-color),
+                /* Sombra para efecto 3D */
+                 4px 4px 5px rgba(0,0,0,0.4),
+                 /* Brillo dorado */
+                 0 0 15px var(--secondary-color);
+        }
+
+        .footer-signature p {
+            margin-top: 15px; /* Espacio entre trofeo y texto */
+            font-size: 0.9em;
+            color: var(--primary-color);
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        #current-date {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Flipbook styles */
+        body {
+            perspective: 1000px; /* Required for 3D effect */
+        }
+
+        .flip-container {
+            width: 600px; /* Same as max-width of card */
+            height: 850px; /* Increased height to accommodate content */
+            perspective: 1000px; /* For 3D effect */
+            margin-bottom: 30px; /* Space between logos and flipbook */
+        }
+
+        .flipper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-container.flipped .flipper {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Hide back of the element when facing away */
+            background: white;
+            border-radius: 15px;
+            border: 4px outset #555;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content vertically */
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+        }
+
+        /* Specific styles for the two-column page */
+        .two-column-content {
+            display: flex;
+            gap: 20px;
+            text-align: left;
+            width: 100%;
+            flex-grow: 1; /* Allow content to grow */
+        }
+
+        .two-column-content > div {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: transparent; /* Fondo transparente para que se vea el de la tarjeta */
+            box-shadow: none; /* También quitaré la sombra para que se vea más limpio */
+        }
+
+        .two-column-content h3 {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .two-column-content p {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .two-column-content p.prayer-text {
+            font-size: 0.8em; /* Even smaller font size for the prayer */
+            line-height: 1.3; /* Slightly tighter line height */
+        }
+
+        .prayer-image {
+            max-width: 60%; /* Reduced image size */
+            height: auto;
+            margin-top: 15px;
+            display: block; /* To center with margin auto */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Adjust card styles to fit into flipbook */
+        .card {
+            animation: none; /* Remove fadeInCard from here */
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="logos-container">
+        <img src="assets/img/USAC LOGO BN.png" alt="Logo USAC">
+        <img src="assets/img/Fahusac_Logo2.png" alt="Logo Fahusac">
+    </div>
+
+    <div id="flipbook-container" class="flip-container initial-load">
+        <div id="flipper" class="flipper">
+            <!-- Page 1: Front Cover -->
+            <div id="page-1" class="front card">
+                <h1 class="welcome-title">¡Felicidades!</h1>
+                <h2 class="student-name">[Nombre del Estudiante]</h2>
+                <p class="message">
+                    "Hoy culminas una etapa fundamental en tu vida, un camino de esfuerzo, dedicación y grandes aprendizajes. Como tu docente, he sido testigo de tu crecimiento y me llena de orgullo verte alcanzar esta meta. El futuro es tuyo, lleno de oportunidades para que apliques tu talento. ¡Nunca dejes de aprender y de soñar! Con todo mi cariño y admiración."
+                </p>
+                <div class="footer-signature">
+                    <span class="material-symbols-outlined trophy-icon">
+                        trophy
+                    </span>
+                    <p>Facultad de Humanidades<br>Sección Cobán</p>
+                    <p id="current-date"></p>
+                </div>
+                <div>
+                    <button id="celebrate-button" class="button">¡Celebrar este logro!</button>
+                    <button id="next-page-1" class="button">Siguiente Página</button>
+                </div>
+            </div>
+
+            <!-- Page 2: Two-Column Content -->
+            <div id="page-2" class="back card">
+                <h1 class="welcome-title">Tu Viaje Continúa...</h1>
+                <div class="two-column-content">
+                    <div>
+                        <h3>Una Oración para Ti:</h3>
+                        <p class="prayer-text">Señor, fuente de toda sabiduría, en este momento elevamos nuestros corazones para pedir tu guía sobre nuestros estudiantes, ayúdales a aprender con atención y a comprender profundamente. Que la curiosidad y el deseo de aprender les inspiren cada día, y que sus estudios les fortalezcan para ser mejores personas y ciudadanos.</p>
+                        <p class="prayer-text">Concede a cada uno la gracia de utilizar los dones y talentos que les has dado para el bien de los demás, y de vivir con honestidad y compasión, que el tiempo de estudio haya sido una oportunidad para crecer en conocimiento y en valores, para que puedan así construir un mundo más justo y humano.</p>
+                        <p class="prayer-text">En el nombre de tu amor, Amén.</p>
+                        <img src="assets/img/plegaria.png" alt="Imagen de Plegaria" class="prayer-image">
+                    </div>
+                    <div>
+                        <h3>Mensaje Inspirador:</h3>
+                        <p>"La vida es un lienzo en blanco, y tú eres el artista. Pinta con colores vibrantes, atrévete a experimentar y no temas a los trazos imperfectos, pues son parte de tu obra maestra. Cada día es una oportunidad para crear algo hermoso y significativo. ¡Haz que cada momento cuente!"</p>
+                    </div>
+                </div>
+                <div>
+                    <button id="prev-page-2" class="button">Página Anterior</button>
+                    <button id="next-page-2" class="button">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- Page 3: Credits (This will be the "back" of page 2, but visually it's page 3) -->
+            <div id="page-3" class="back card">
+                <h1 class="welcome-title">Con cariño</h1>
+                <p class="message">
+                    M.A. Conchita Sierra Loaiza<br>
+                    Dra. Villma Alcira Sosa
+                </p>
+                <div>
+                    <button id="prev-page-3" class="button">Página Anterior</button>
+                    <button class="button download">Descargar Recuerdo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="background-music" loop>
+        <!-- Busca en Google "música inspiradora sin copyright" y reemplaza el src -->
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Sometimes.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const celebrateButton = document.getElementById('celebrate-button');
+        const music = document.getElementById('background-music');
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+
+        const flipbookContainer = document.getElementById('flipbook-container');
+        const flipper = document.getElementById('flipper');
+        const page1 = document.getElementById('page-1');
+        const page2 = document.getElementById('page-2');
+        const page3 = document.getElementById('page-3');
+
+        const nextPage1Button = document.getElementById('next-page-1');
+        const prevPage2Button = document.getElementById('prev-page-2');
+        const nextPage2Button = document.getElementById('next-page-2');
+        const prevPage3Button = document.getElementById('prev-page-3');
+
+        let currentPage = 1; // Track current page
+
+        let confettiParticles = [];
+        const colors = ['#FFD700', '#003366', '#FF6347', '#32CD32', '#1E90FF'];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function ConfettiParticle() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height - canvas.height;
+            this.size = Math.random() * 10 + 5;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.speed = Math.random() * 5 + 2;
+            this.rotation = Math.random() * 360;
+            this.rotationSpeed = Math.random() * 2 - 1;
+        }
+
+        ConfettiParticle.prototype.update = function() {
+            this.y += this.speed;
+            this.rotation += this.rotationSpeed;
+            if (this.y > canvas.height) {
+                this.y = -20;
+                this.x = Math.random() * canvas.width;
+            }
+        }
+
+        ConfettiParticle.prototype.draw = function() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation * Math.PI / 180);
+            ctx.fillStyle = this.color;
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            ctx.restore();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 200; i++) {
+                confettiParticles.push(new ConfettiParticle());
+            }
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if(confettiParticles.length > 0){
+                confettiParticles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                requestAnimationFrame(animateConfetti);
+            }
+        }
+
+        celebrateButton.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+            }
+            if(confettiParticles.length === 0){
+                createConfetti();
+                animateConfetti();
+            }
+        });
+        
+        // Flipbook navigation logic
+        function showPage(pageNumber) {
+            // Hide all pages first
+            page1.style.display = 'none';
+            page2.style.display = 'none';
+            page3.style.display = 'none';
+
+            // Show the requested page
+            if (pageNumber === 1) {
+                page1.style.display = 'flex';
+                flipper.style.transform = 'rotateY(0deg)';
+            } else if (pageNumber === 2) {
+                page2.style.display = 'flex';
+                flipper.style.transform = 'rotateY(180deg)'; // Flip to show back
+            } else if (pageNumber === 3) {
+                page3.style.display = 'flex';
+                flipper.style.transform = 'rotateY(180deg)'; // Flip to show back
+            }
+            currentPage = pageNumber;
+        }
+
+        nextPage1Button.addEventListener('click', () => {
+            showPage(2);
+        });
+
+        prevPage2Button.addEventListener('click', () => {
+            showPage(1);
+        });
+
+        nextPage2Button.addEventListener('click', () => {
+            showPage(3);
+        });
+
+        prevPage3Button.addEventListener('click', () => {
+            showPage(2);
+        });
+
+        // Initial setup
+        showPage(1); // Start on the first page
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Nuevo script para obtener el nombre de la URL y la fecha
+        document.addEventListener('DOMContentLoaded', () => {
+            // Poner nombre de estudiante
+            const urlParams = new URLSearchParams(window.location.search);
+            const studentName = urlParams.get('nombre');
+
+            if (studentName) {
+                document.querySelector('.student-name').textContent = studentName;
+            }
+
+            // Poner fecha actual
+            const dateElement = document.getElementById('current-date');
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = today.toLocaleDateString('es-ES', options);
+        });
+
+    </script>
+</body>
+</html>

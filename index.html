@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Investigación: Deserción Universitaria</title>
+    <meta property="og:title" content="Encuesta de Investigación: Deserción Universitaria">
+    <meta property="og:description" content="Participa en nuestra encuesta para identificar factores de deserción universitaria y ayudar a mejorar la educación superior.">
+    <meta property="og:image" content="https://encuesta-8880c.web.app/meja_investigacion/img/Jhiros_New_SFBN.png"> <!-- Asegúrate que la URL sea accesible públicamente -->
+    <meta property="og:url" content="https://encuesta-8880c.web.app/meja_investigacion/Splash2.html">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos para el Splash Screen */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000; /* Fondo negro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #splash.fade-out {
+            opacity: 0;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 200px; /* Agrandado para el nuevo logo */
+            height: 200px; /* Agrandado para el nuevo logo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: conic-gradient(#00BFFF, #FF69B4, #FFA500, #FFFF00, #32CD32, #87CEFA, #00BFFF);
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            box-shadow: 0 0 20px #00BFFF, 0 0 35px #00BFFF;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px; /* Anillo delgado */
+            height: 180px; /* Anillo delgado */
+            background: #000000;
+            border-radius: 50%;
+        }
+
+        .loader-logo {
+            width: 160px; /* Logo más grande */
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Name Input Modal WOW Styles */
+        #name-input-modal {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #name-input-modal.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .name-input-content {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.5), 0 0 60px rgba(255, 105, 180, 0.4);
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid #00BFFF;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #name-input-modal.visible .name-input-content {
+            transform: scale(1);
+        }
+
+        .name-input-content h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5em;
+            color: #003366;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .name-input-content input[type="text"] {
+            width: calc(100% - 34px); /* Adjust for border and padding */
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .name-input-content input[type="text"]:focus {
+            outline: none;
+            border-color: #00BFFF;
+            box-shadow: 0 0 15px #00BFFF;
+        }
+
+        #submit-name-button {
+            font-family: 'Oswald', sans-serif;
+            background: linear-gradient(45deg, #00BFFF, #32CD32, #FF69B4, #FFA500);
+            background-size: 400% 400%;
+            color: white;
+            font-weight: 700;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        #submit-name-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #FF69B4;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Clase para ocultar elementos */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Contenedor del menú para centrar los botones */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="loader-container">
+            <div class="loader"></div>
+            <img src="assets/img/Jhiros_New_SFBN.png" alt="Logo Jhiros" class="loader-logo">
+        </div>
+    </div>
+
+    <!-- Contenido Principal (Menú) -->
+    <div id="main-content" class="hidden">
+        <div class="poster">
+            <div class="background-pattern"></div>
+            <div class="grid-pattern"></div>
+            <div class="content">
+                <div class="header">
+                    <h1 class="title">Menú de Asistencia</h1>
+                    <p class="description">Selecciona el día para registrar tu asistencia.</p>
+                </div>
+                
+                <div class="menu-container">
+                    <a href="asistencia_dia1.html" class="submit-button">Registrar Asistencia Día 1</a>
+                    <a href="asistencia_dia2.html" class="submit-button">Registrar Asistencia Día 2</a>
+                </div>
+
+                <div class="footer">
+                    <p>Universidad Rafael Landívar • Tradición Jesuita en Guatemala</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Name Input Modal -->
+    <div id="name-input-modal">
+        <div class="name-input-content">
+            <h2>Ingrese su nombre completo</h2>
+            <input type="text" id="student-name-input" placeholder="Escribe tu nombre aquí...">
+            <button id="submit-name-button">Ingresar</button>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Simula un tiempo de carga
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                const nameModal = document.getElementById('name-input-modal');
+
+                // Desvanecer el splash
+                splash.classList.add('fade-out');
+
+                // Cuando el splash se desvanece, ocúltalo y muestra el modal
+                splash.addEventListener('transitionend', () => {
+                    splash.style.display = 'none';
+                    nameModal.classList.add('visible');
+                });
+
+            }, 3000); // 3 segundos de splash screen
+
+            const submitNameButton = document.getElementById('submit-name-button');
+            submitNameButton.addEventListener('click', () => {
+                const studentName = document.getElementById('student-name-input').value;
+                if (studentName.trim() !== '') {
+                    // Redirige a tarjeta.html con el nombre como parámetro
+                    window.location.href = `tarjeta.html?nombre=${encodeURIComponent(studentName)}`;
+                } else {
+                    alert('Por favor, ingresa un nombre.');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
