@@ -82,6 +82,12 @@
             color: var(--secondary-color);
             font-weight: 700;
             margin: 10px 0;
+            /* Borde azul oscuro para resaltar */
+            text-shadow:
+                -1px -1px 0 var(--primary-color),
+                 1px -1px 0 var(--primary-color),
+                -1px  1px 0 var(--primary-color),
+                 1px  1px 0 var(--primary-color);
         }
 
         .message {
@@ -169,6 +175,55 @@
             font-size: 0.8em;
             color: #777;
             font-style: italic;
+        }
+
+        .audio-messages {
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        .audio-message {
+            margin-bottom: 20px;
+        }
+
+        .audio-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            text-align: left;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.7);
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 50px; /* Rounded look */
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            outline: none;
+        }
+
+        /* Customizing the audio player controls (for WebKit browsers like Chrome/Safari) */
+        audio::-webkit-media-controls-panel {
+            background-color: #eaf2ff; /* Light blue background */
+            border-radius: 50px;
+        }
+
+        audio::-webkit-media-controls-play-button {
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--secondary-color);
+        }
+
+        audio::-webkit-media-controls-play-button:hover {
+            background-color: #ffc107; /* Lighter gold */
+        }
+
+        audio::-webkit-media-controls-current-time-display,
+        audio::-webkit-media-controls-time-remaining-display {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-shadow: none;
         }
 
         /* Flipbook styles */
@@ -312,10 +367,24 @@
                     <div>
                         <h3>Mensaje Inspirador:</h3>
                         <p>"La vida es un lienzo en blanco, y tú eres el artista. Pinta con colores vibrantes, atrévete a experimentar y no temas a los trazos imperfectos, pues son parte de tu obra maestra. Cada día es una oportunidad para crear algo hermoso y significativo. ¡Haz que cada momento cuente!"</p>
+                        <div class="audio-messages">
+                            <div class="audio-message">
+                                <p class="audio-label">Mensaje de M.A. Conchita Sierra Loaiza:</p>
+                                <audio controls src="assets/audio/mensaje_conchita.mp3">
+                                    Tu navegador no soporta el elemento de audio.
+                                </audio>
+                            </div>
+                            <div class="audio-message">
+                                <p class="audio-label">Mensaje de Dra. Villma Alcira Sosa:</p>
+                                <audio controls src="assets/audio/mensaje_villma.mp3">
+                                    Tu navegador no soporta el elemento de audio.
+                                </audio>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <button id="prev-page-2" class="button">Página Anterior</button>
+                    <button id="prev-page-2" class="button">Anterior</button>
                     <button id="next-page-2" class="button">Siguiente</button>
                 </div>
             </div>
@@ -328,7 +397,7 @@
                     Dra. Villma Alcira Sosa
                 </p>
                 <div>
-                    <button id="prev-page-3" class="button">Página Anterior</button>
+                    <button id="prev-page-3" class="button">Anterior</button>
                     <button class="button download">Descargar Recuerdo</button>
                 </div>
             </div>
