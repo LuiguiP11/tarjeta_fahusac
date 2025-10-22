@@ -369,6 +369,7 @@
     </style>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
@@ -585,10 +586,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Poner nombre de estudiante
             const urlParams = new URLSearchParams(window.location.search);
-            const studentName = urlParams.get('nombre');
+            const studentNameFromUrl = urlParams.get('nombre');
 
-            if (studentName) {
-                document.querySelector('.student-name').textContent = studentName;
+            if (studentNameFromUrl) {
+                document.querySelector('.student-name').textContent = studentNameFromUrl;
             }
 
             // Poner fecha actual
@@ -596,6 +597,26 @@
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             dateElement.textContent = today.toLocaleDateString('es-ES', options);
+
+            // Lógica para el botón de descarga
+            const downloadButton = document.querySelector('.button.download');
+            downloadButton.addEventListener('click', () => {
+                const frontCard = document.getElementById('page-1');
+                const studentName = document.querySelector('.student-name').textContent;
+
+                // Usar html2canvas para capturar el elemento
+                html2canvas(frontCard, {
+                    useCORS: true, // Necesario si hay imágenes de otros dominios
+                    scale: 2 // Aumentar la resolución para mejor calidad
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    // Crear un nombre de archivo dinámico
+                    const fileName = `recuerdo_${studentName.replace(/ /g, '_')}.png`;
+                    link.download = fileName;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click(); // Simular clic para descargar
+                });
+            });
         });
 
     </script>
