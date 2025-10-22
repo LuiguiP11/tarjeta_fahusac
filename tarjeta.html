@@ -69,7 +69,7 @@
             font-size: 3.5em;
             color: var(--primary-color);
             margin: 0;
-            animation: slideInTitle 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            /* Eliminada la animación para evitar problemas con html2canvas */
         }
         
         @keyframes slideInTitle {
@@ -383,20 +383,23 @@
         <div id="flipper" class="flipper">
             <!-- Page 1: Front Cover -->
             <div id="page-1" class="front card">
-                <h1 class="welcome-title">¡Felicidades!</h1>
-                <h2 class="student-name">[Nombre del Estudiante]</h2>
-                <p class="message">
-                    "Hoy culminas una etapa fundamental en tu vida, un camino de esfuerzo, dedicación y grandes aprendizajes. Como tu docente, he sido testigo de tu crecimiento y me llena de orgullo verte alcanzar esta meta. El futuro es tuyo, lleno de oportunidades para que apliques tu talento. ¡Nunca dejes de aprender y de soñar! Con todo mi cariño y admiración."
-                </p>
-                <div class="footer-signature">
-                    <span class="material-symbols-outlined trophy-icon">
-                        trophy
-                    </span>
-                    <p>Facultad de Humanidades<br>Sección Cobán</p>
-                    <p id="current-date"></p>
+                <div id="card-content-to-capture">
+                    <h1 class="welcome-title">¡Felicidades!</h1>
+                    <h2 class="student-name">[Nombre del Estudiante]</h2>
+                    <p class="message">
+                        "Hoy culminas una etapa fundamental en tu vida, un camino de esfuerzo, dedicación y grandes aprendizajes. Como tu docente, he sido testigo de tu crecimiento y me llena de orgullo verte alcanzar esta meta. El futuro es tuyo, lleno de oportunidades para que apliques tu talento. ¡Nunca dejes de aprender y de soñar! Con todo mi cariño y admiración."
+                    </p>
+                    <div class="footer-signature">
+                        <span class="material-symbols-outlined trophy-icon">
+                            trophy
+                        </span>
+                        <p>Facultad de Humanidades<br>Sección Cobán</p>
+                        <p id="current-date"></p>
+                    </div>
                 </div>
                 <div>
                     <button id="celebrate-button" class="button">¡Celebrar este logro!</button>
+                    <button class="button download">Descargar Recuerdo</button>
                     <button id="next-page-1" class="button">Siguiente Página</button>
                 </div>
             </div>
@@ -446,20 +449,16 @@
                 </p>
                 <div>
                     <button id="prev-page-3" class="button">Anterior</button>
-                    <button class="button download">Descargar Recuerdo</button>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <audio id="background-music" loop>
-        <!-- Busca en Google "música inspiradora sin copyright" y reemplaza el src -->
-        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Sometimes.mp3" type="audio/mpeg">
-    </audio>
+
 
     <script>
         const celebrateButton = document.getElementById('celebrate-button');
-        const music = document.getElementById('background-music');
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -528,9 +527,6 @@
         }
 
         celebrateButton.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-            }
             if(confettiParticles.length === 0){
                 createConfetti();
                 animateConfetti();
@@ -601,21 +597,24 @@
             // Lógica para el botón de descarga
             const downloadButton = document.querySelector('.button.download');
             downloadButton.addEventListener('click', () => {
-                const frontCard = document.getElementById('page-1');
+                const frontCard = document.getElementById('card-content-to-capture');
                 const studentName = document.querySelector('.student-name').textContent;
 
-                // Usar html2canvas para capturar el elemento
-                html2canvas(frontCard, {
-                    useCORS: true, // Necesario si hay imágenes de otros dominios
-                    scale: 2 // Aumentar la resolución para mejor calidad
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    // Crear un nombre de archivo dinámico
-                    const fileName = `recuerdo_${studentName.replace(/ /g, '_')}.png`;
-                    link.download = fileName;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click(); // Simular clic para descargar
-                });
+                // Pequeña demora para asegurar que todas las fuentes e imágenes externas se rendericen
+                setTimeout(() => {
+                    // Usar html2canvas para capturar el elemento
+                    html2canvas(frontCard, {
+                        useCORS: true, // Necesario si hay imágenes de otros dominios
+                        scale: 2 // Aumentar la resolución para mejor calidad
+                    }).then(canvas => {
+                        const link = document.createElement('a');
+                        // Crear un nombre de archivo dinámico
+                        const fileName = `recuerdo_${studentName.replace(/ /g, '_')}.png`;
+                        link.download = fileName;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click(); // Simular clic para descargar
+                    });
+                }, 500); // 500 milisegundos de espera
             });
         });
 
