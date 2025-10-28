@@ -321,6 +321,48 @@
             animation: none; /* Remove fadeInCard from here */
         }
 
+        /* --- Credits Page Styles --- */
+        .credits-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start; /* Align items to the top */
+            width: 100%;
+            flex-grow: 1; /* Allow container to take up space */
+            padding-top: 20px;
+        }
+
+        .credit-item {
+            text-align: center;
+            flex-basis: 45%;
+        }
+
+        .credit-item img, .credit-item .img-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .credit-item .img-placeholder {
+            background-color: #e9e9e9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1em;
+            color: #999;
+            border: 4px dashed var(--primary-color);
+        }
+
+        .credit-item p {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
             .card, .front, .back {
@@ -364,6 +406,17 @@
             .audio-label { font-size: 0.8em; }
             .footer-signature p { font-size: 0.8em; }
             #current-date { font-size: 0.7em; }
+
+            .credits-container {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .credit-item img, .credit-item .img-placeholder {
+                width: 120px;
+                height: 120px;
+            }
         }
 
     </style>
@@ -421,13 +474,13 @@
                         <div class="audio-messages">
                             <div class="audio-message">
                                 <p class="audio-label">Mensaje de M.A. Conchita Sierra Loaiza:</p>
-                                <audio controls src="assets/audio/mensaje_conchita.mp3">
+                                <audio controls src="assets/audio/MA_Conchita.mp3">
                                     Tu navegador no soporta el elemento de audio.
                                 </audio>
                             </div>
                             <div class="audio-message">
-                                <p class="audio-label">Mensaje de Dra. Villma Alcira Sosa:</p>
-                                <audio controls src="assets/audio/mensaje_villma.mp3">
+                                <p class="audio-label">Mensaje de Dra. Villma Alcira Leal Sosa:</p>
+                                <audio controls src="assets/audio/Dra_Vilma.mp3">
                                     Tu navegador no soporta el elemento de audio.
                                 </audio>
                             </div>
@@ -443,10 +496,16 @@
             <!-- Page 3: Credits (This will be the "back" of page 2, but visually it's page 3) -->
             <div id="page-3" class="back card">
                 <h1 class="welcome-title">Con cariño</h1>
-                <p class="message">
-                    M.A. Conchita Sierra Loaiza<br>
-                    Dra. Villma Alcira Sosa
-                </p>
+                <div class="credits-container">
+                    <div class="credit-item">
+                        <img src="assets/img/MA_Conchita.png" alt="Foto de M.A. Conchita Sierra Loaiza">
+                        <p>M.A. Conchita Sierra Loaiza</p>
+                    </div>
+                    <div class="credit-item">
+                        <div class="img-placeholder"><span></span></div>
+                        <p>Dra. Villma Alcira Leal Sosa</p>
+                    </div>
+                </div>
                 <div>
                     <button id="prev-page-3" class="button">Anterior</button>
 
